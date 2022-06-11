@@ -37,7 +37,7 @@ public:
 		llvm::StringRef fileName,
 		bool isAngled,
 		clang::CharSourceRange fileNameRange,
-		const clang::FileEntry* fileEntry,
+		clang::Optional<clang::FileEntryRef> fileEntry,
 		llvm::StringRef searchPath,
 		llvm::StringRef relativePath,
 		const clang::Module* imported,
