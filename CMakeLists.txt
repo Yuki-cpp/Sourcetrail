@@ -401,21 +401,20 @@ if (BUILD_CXX_LANGUAGE_PACKAGE)
         set(REQ_LLVM_LIBS LLVM)
     else()
         llvm_map_components_to_libnames(REQ_LLVM_LIBS
-            support core libdriver passes option 
-			interpreter AsmParser X86AsmParser AMDGPUAsmParser 
-			ARMAsmParser AVRAsmParser BPFAsmParser MipsAsmParser MSP430AsmParser
-			PowerPCAsmParser RISCVAsmParser SparcAsmParser SystemZAsmParser
-			VEAsmParser WebAssemblyAsmParser AArch64AsmParser
+            support core libdriver passes option
         )
         foreach(LLVM_TARGET ${LLVM_TARGETS_TO_BUILD})
-            get_property(lib_deps GLOBAL PROPERTY "LLVMBUILD_LIB_DEPS_LLVM${LLVM_TARGET}CodeGen")
-            list(APPEND REQ_LLVM_LIBS "LLVM${LLVM_TARGET}CodeGen")
-            list(APPEND REQ_LLVM_LIBS "${lib_deps}")
-            get_property(lib_deps GLOBAL PROPERTY "LLVMBUILD_LIB_DEPS_LLVM${LLVM_TARGET}AsmParser")
-            if (NOT "${lib_deps}" STREQUAL "")
-                list(APPEND REQ_LLVM_LIBS "LLVM${LLVM_TARGET}AsmParser")
-                list(APPEND REQ_LLVM_LIBS "${lib_deps}")
-            endif()
+			if("LLVM${LLVM_TARGET}CodeGen" IN_LIST LLVM_AVAILABLE_LIBS)
+				get_property(lib_deps GLOBAL PROPERTY "LLVMBUILD_LIB_DEPS_LLVM${LLVM_TARGET}CodeGen")
+				list(APPEND REQ_LLVM_LIBS "LLVM${LLVM_TARGET}CodeGen")
+				list(APPEND REQ_LLVM_LIBS "${lib_deps}")
+			endif()
+
+			if("LLVM${LLVM_TARGET}AsmParser" IN_LIST LLVM_AVAILABLE_LIBS)
+				get_property(lib_deps GLOBAL PROPERTY "LLVMBUILD_LIB_DEPS_LLVM${LLVM_TARGET}AsmParser")
+				list(APPEND REQ_LLVM_LIBS "LLVM${LLVM_TARGET}AsmParser")
+				list(APPEND REQ_LLVM_LIBS "${lib_deps}")
+			endif()
         endforeach()
     endif()
 
