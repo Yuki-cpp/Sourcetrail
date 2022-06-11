@@ -134,13 +134,6 @@ endif()
 if (BUILD_CXX_LANGUAGE_PACKAGE)
 
 	find_package(Clang REQUIRED)
-
-	get_cmake_property(_variableNames VARIABLES)
-list (SORT _variableNames)
-foreach (_variableName ${_variableNames})
-	message(STATUS "${_variableName}=${${_variableName}}")
-endforeach()
-
 	if (LLVM_FOUND)
 		message(STATUS "Found LLVM ${LLVM_VERSION}")
 	endif()
