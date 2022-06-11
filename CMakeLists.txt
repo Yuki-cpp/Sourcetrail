@@ -138,7 +138,7 @@ if (BUILD_CXX_LANGUAGE_PACKAGE)
 	get_cmake_property(_variableNames VARIABLES)
 list (SORT _variableNames)
 foreach (_variableName ${_variableNames})
-    message(STATUS "${_variableName}=${${_variableName}}")
+	message(STATUS "${_variableName}=${${_variableName}}")
 endforeach()
 
 	if (LLVM_FOUND)
@@ -397,13 +397,13 @@ if (BUILD_CXX_LANGUAGE_PACKAGE)
 
 	link_directories(${LLVM_LIBRARY_DIRS} ${CLANG_LIBRARY_DIRS} ${Boost_LIBRARY_DIRS})
 
-    if(CLANG_LINK_CLANG_DYLIB)
-        set(REQ_LLVM_LIBS LLVM)
-    else()
-        llvm_map_components_to_libnames(REQ_LLVM_LIBS
-            support core libdriver passes option
-        )
-        foreach(LLVM_TARGET ${LLVM_TARGETS_TO_BUILD})
+	if(CLANG_LINK_CLANG_DYLIB)
+		set(REQ_LLVM_LIBS LLVM)
+	else()
+		llvm_map_components_to_libnames(REQ_LLVM_LIBS
+			support core libdriver passes option
+		)
+		foreach(LLVM_TARGET ${LLVM_TARGETS_TO_BUILD})
 			if("LLVM${LLVM_TARGET}CodeGen" IN_LIST LLVM_AVAILABLE_LIBS)
 				get_property(lib_deps GLOBAL PROPERTY "LLVMBUILD_LIB_DEPS_LLVM${LLVM_TARGET}CodeGen")
 				list(APPEND REQ_LLVM_LIBS "LLVM${LLVM_TARGET}CodeGen")
@@ -415,31 +415,31 @@ if (BUILD_CXX_LANGUAGE_PACKAGE)
 				list(APPEND REQ_LLVM_LIBS "LLVM${LLVM_TARGET}AsmParser")
 				list(APPEND REQ_LLVM_LIBS "${lib_deps}")
 			endif()
-        endforeach()
-    endif()
+		endforeach()
+	endif()
 
-    if(CLANG_LINK_CLANG_DYLIB)  # Should be CLANG_LINK_CLANG_DYLIB in future LLVM release
-        set(CLANG_LIBRARIES clang-cpp)
-    else()
-        set(CLANG_LIBRARIES
-            clangASTMatchers
-            clangFrontend
-            clangSerialization
-            clangDriver
-            clangTooling
-            clangParse
-            clangSema
-            clangStaticAnalyzerFrontend
-            clangStaticAnalyzerCheckers
-            clangStaticAnalyzerCore
-            clangAnalysis
-            clangRewriteFrontend
-            clangEdit
-            clangAST
-            clangLex
-            clangBasic
-        )
-    endif()
+	if(CLANG_LINK_CLANG_DYLIB)  # Should be CLANG_LINK_CLANG_DYLIB in future LLVM release
+		set(CLANG_LIBRARIES clang-cpp)
+	else()
+		set(CLANG_LIBRARIES
+			clangASTMatchers
+			clangFrontend
+			clangSerialization
+			clangDriver
+			clangTooling
+			clangParse
+			clangSema
+			clangStaticAnalyzerFrontend
+			clangStaticAnalyzerCheckers
+			clangStaticAnalyzerCore
+			clangAnalysis
+			clangRewriteFrontend
+			clangEdit
+			clangAST
+			clangLex
+			clangBasic
+		)
+	endif()
 
 	target_link_libraries(${LIB_CXX_PROJECT_NAME} ${LIB_UTILITY_PROJECT_NAME} ${CLANG_LIBRARIES} ${REQ_LLVM_LIBS})
 
